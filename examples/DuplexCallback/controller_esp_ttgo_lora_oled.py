@@ -31,7 +31,7 @@ class Controller(controller_esp.Controller, display_ssd1306_i2c.Display):
     
     
     # ESP config
-    ON_BOARD_LED_PIN_NO = 15
+    ON_BOARD_LED_PIN_NO = 2
     ON_BOARD_LED_HIGH_IS_ON = False
     GPIO_PINS = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
                  12, 13, 14, 15, 16, 17, 18, 19, 21, 22,

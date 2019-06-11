@@ -1,9 +1,9 @@
 import sx127x
 import config_lora 
-
-# import LoRaDumpRegisters
-# import LoRaSender
-# import LoRaReceiver
+import time
+#import LoRaDumpRegisters
+import LoRaSender
+import LoRaReceiver
 # import LoRaSetSpread
 # import LoRaSetSyncWord
 # import LoRaReceiverCallback
@@ -20,6 +20,7 @@ def main():
                # pin_id_reset = PIN_ID_FOR_LORA_RESET, 
                # blink_on_start = (2, 0.5, 0.5))
     controller = config_lora.Controller()
+    time.sleep(0.5)
     
     
     # SX127x(name = 'SX127x',
@@ -36,21 +37,29 @@ def main():
                                # pin_id_CadDone = PIN_ID_FOR_LORA_DIO3,
                                # pin_id_CadDetected = PIN_ID_FOR_LORA_DIO4,
                                # pin_id_PayloadCrcError = PIN_ID_FOR_LORA_DIO5)                        
-    lora = controller.add_transceiver(sx127x.SX127x(name = 'LoRa'),
-                                      pin_id_ss = config_lora.Controller.PIN_ID_FOR_LORA_SS,
-                                      pin_id_RxDone = config_lora.Controller.PIN_ID_FOR_LORA_DIO0)
-    print('lora', lora)
-    
+    rdy=True
+    while rdy:
+        try:
+             lora = controller.add_transceiver(sx127x.SX127x(name = 'LoRa'),pin_id_ss = config_lora.Controller.PIN_ID_FOR_LORA_SS,pin_id_RxDone = config_lora.Controller.PIN_ID_FOR_LORA_DIO0)
+             rdy=False
+        except:
+            rdy=True
+            print("not added")
+            time.sleep(1)
 
-    # LoRaDumpRegisters.dumpRegisters(lora)
-    # LoRaSender.send(lora)    
-    # LoRaReceiver.receive(lora)
+#    print('lora', lora)
+    
+    time.sleep(0.5)
+
+ #   LoRaDumpRegisters.dumpRegisters(lora)
+    #LoRaSender.send(lora)    
+    LoRaReceiver.receive(lora)
     # LoRaSetSpread.setSpread(lora)
     # LoRaSetSyncWord.setSyncWord(lora)
     # LoRaReceiverCallback.receiveCallback(lora)
     # LoRaDuplex.duplex(lora)
-    LoRaDuplexCallback.duplexCallback(lora)
-    # LoRaPingPong.ping_pong(lora)
+#    LoRaDuplexCallback.duplexCallback(lora)
+    #LoRaPingPong.ping_pong(lora)
 
     
 if __name__ == '__main__':
